@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/LibraryHibernate</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/libraryhibernate</property>
         <property name="hibernate.connection.username">postgresMaster</property>
         <property name="hibernate.connection.password">goPostgresGo</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
@@ -14,7 +14,7 @@
 
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">validate</property>
 
         <!--update, create-drop, none, validate, create-->
 
