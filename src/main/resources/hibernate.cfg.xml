@@ -14,9 +14,12 @@
 
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
 
-        <mapping class="entity.Book"/>
-        <mapping class="entity.Author"/>
-        <mapping class="entity.User"/>
+        <!--update, create-drop, none, validate, create-->
+
+        <mapping class="org.example.model.Book"/>
+        <mapping class="org.example.model.Author"/>
+        <mapping class="org.example.model.User"/>
     </session-factory>
 </hibernate-configuration>
