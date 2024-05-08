@@ -3,6 +3,7 @@ package org.example.model.data.repositories;
 import org.example.model.Author;
 import org.example.model.Book;
 import org.example.model.data.SessionFactoryHolder;
+import org.example.model.data.repositories.implementations.HibernateBookRepository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.jupiter.api.*;
@@ -13,18 +14,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HibernateBookRepositoryTest {
 
-    private static final String firstname = "Ciccio";
-    private static final String lastname = "Pasticcio";
-    private static final LocalDate birthdate = LocalDate.of(2000,1,1);
-    private static final String country = "Italy";
-    private static final String title = "title";
+    private static final String FIRSTNAME = "Ciccio";
+    private static final String LASTNAME = "Pasticcio";
+    private static final LocalDate BIRTHDATE = LocalDate.of(2000,1,1);
+    private static final String COUNTRY = "Italy";
+    private static final String TITLE = "title";
     private Book b1;
     private Author a1;
     private HibernateBookRepository hr;
     @BeforeEach
     void setUp() {
-        a1 = new Author(firstname, lastname, birthdate, country);
-        b1 = new Book(title);
+        a1 = new Author(FIRSTNAME, LASTNAME, BIRTHDATE, COUNTRY);
+        b1 = new Book(TITLE);
         a1.addBook(b1);
     }
 
@@ -49,7 +50,7 @@ class HibernateBookRepositoryTest {
         try(Session s = SessionFactoryHolder.getHolder().createSession()){
             Book b = s.find(Book.class, b1.getId());
             assertNotNull(b);
-            assertEquals(title, b1.getTitle());
+            assertEquals(TITLE, b1.getTitle());
         }
     }
 
