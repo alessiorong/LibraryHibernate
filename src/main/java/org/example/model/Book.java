@@ -16,6 +16,10 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
+    @Column(name = "num_pages")
+    private int numPages;
+    @Transient //hibernate lo ignorerà
+    private int dummy;
     @ManyToMany(mappedBy = "favouriteBooks")
     private List<User> fans = new ArrayList<>();
 
