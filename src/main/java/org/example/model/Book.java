@@ -18,18 +18,19 @@ public class Book {
     private Author author;
     @Column(name = "num_pages")
     private int numPages;
-    @Transient
+    @Transient //hibernate lo ignorerà
     private int dummy;
     @ManyToMany(mappedBy = "favouriteBooks")
     private List<User> fans = new ArrayList<>();
 
-    public Book(){}
+    public Book() {
+    }
 
     public Book(String title) {
         this.title = title;
     }
 
-    public void setAuthor(Author author){
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
@@ -40,4 +41,13 @@ public class Book {
     public String getTitle() {
         return title;
     }
+
+    public static void main(String[] args) {
+        Author a = new Author();
+        Book b = new Book();
+        a.addBook(b);
+        //b.setAuthor(a);
+        //Uso Hibernate per salvare il libro e l'autore
+    }
+
 }

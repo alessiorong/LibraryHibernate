@@ -12,7 +12,7 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "fistname")
+    @Column(name = "firstname")
     private String firstname;
     @Column(name = "lastname")
     private String lastname;
@@ -20,12 +20,11 @@ public class Author {
     private LocalDate birthdate;
     @Column(name = "country")
     private String country;
-    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE) //mappatura è in author
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
     private List<Book> books = new ArrayList<>();
 
-    public Author(){}
-
-    public Author(int id, String firstname, String lastname, LocalDate birthdate, String country, List<Book> books) {
+    public Author(int id, String firstname, String lastname, LocalDate birthdate,
+                  String country, List<Book> books) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -34,8 +33,15 @@ public class Author {
         this.books = books;
     }
 
+    public Author(){
+
+    }
+
     public Author(String firstname, String lastname, LocalDate birthdate, String country) {
-        this(0, firstname, lastname, birthdate, country, null);
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.birthdate = birthdate;
+        this.country = country;
     }
 
     public void addBook(Book b){
