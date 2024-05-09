@@ -49,4 +49,10 @@ public class User {
     public void setFavouriteBooks(List<Book> favouriteBooks) {
         this.favouriteBooks = favouriteBooks;
     }
+
+    public void addFavouriteBook(Book b) {
+        favouriteBooks.add(b);
+        b.getFans().add(this);
+    }
 }
+

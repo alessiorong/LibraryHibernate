@@ -18,6 +18,8 @@ public class Book {
     private Author author;
     @Column(name = "num_pages")
     private int numPages;
+    @Column(name = "genre")
+    private String genre;
     @Transient //hibernate lo ignorerà
     private int dummy;
     @ManyToMany(mappedBy = "favouriteBooks")
@@ -40,6 +42,10 @@ public class Book {
 
     public String getTitle() {
         return title;
+    }
+
+    public List<User> getFans() {
+        return fans;
     }
 
     public static void main(String[] args) {
