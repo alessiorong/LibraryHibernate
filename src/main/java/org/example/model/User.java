@@ -21,6 +21,10 @@ public class User {
 
     public User(){};
 
+    public User(String username) {
+        this.username = username;
+    }
+
     public User(Long id, String username) {
         this.id = id;
         this.username = username;
@@ -48,5 +52,10 @@ public class User {
 
     public void setFavouriteBooks(List<Book> favouriteBooks) {
         this.favouriteBooks = favouriteBooks;
+    }
+
+    public void addFavBook(Book b){
+        favouriteBooks.add(b);
+        b.setFan(this);
     }
 }

@@ -18,6 +18,8 @@ public class Book {
     private Author author;
     @Column(name = "num_pages")
     private int numPages;
+    @Column(name = "genre")
+    private String genre;
     @Transient //hibernate lo ignorerà
     private int dummy;
     @ManyToMany(mappedBy = "favouriteBooks")
@@ -26,12 +28,21 @@ public class Book {
     public Book() {
     }
 
+    public Book(String title, String genre) {
+        this.title = title;
+        this.genre = genre;
+    }
+
     public Book(String title) {
         this.title = title;
     }
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public void setFan(User user) {
+        this.fans.add(user);
     }
 
     public Long getId() {

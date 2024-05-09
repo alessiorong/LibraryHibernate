@@ -1,6 +1,4 @@
-package org.example.model.data.repositories;
-
-import org.example.model.Book;
+package org.example.model.data.repositories.abstractions;
 
 import java.util.List;
 import java.util.Optional;
