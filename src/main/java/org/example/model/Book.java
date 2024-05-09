@@ -2,6 +2,9 @@ package org.example.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "book")
 public class Book {
@@ -13,5 +16,28 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
+    @Column(name = "num_pages")
+    private int numPages;
+    @Transient
+    private int dummy;
+    @ManyToMany(mappedBy = "favouriteBooks")
+    private List<User> fans = new ArrayList<>();
 
+    public Book(){}
+
+    public Book(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(Author author){
+        this.author = author;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 }
