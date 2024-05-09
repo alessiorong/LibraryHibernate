@@ -1,4 +1,4 @@
-package org.example.model.data.repositories;
+package org.example.model.data.repositories.abstractions;
 
 import org.example.model.Book;
 

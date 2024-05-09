@@ -20,6 +20,8 @@ public class Book {
     private int numPages;
     @Transient //hibernate lo ignorerà
     private int dummy;
+    @Column(name = "genre")
+    private String genre;
     @ManyToMany(mappedBy = "favouriteBooks")
     private List<User> fans = new ArrayList<>();
 
@@ -30,8 +32,16 @@ public class Book {
         this.title = title;
     }
 
+    public Book(String title, String genre) {
+        this.title = title;
+        this.genre = genre;
+    }
+
     public void setAuthor(Author author) {
         this.author = author;
+    }
+    public void setFan(User user) {
+        this.fans.add(user);
     }
 
     public Long getId() {

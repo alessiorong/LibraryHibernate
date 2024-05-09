@@ -1,14 +1,15 @@
-package org.example.model.data.repositories;
+package org.example.model.data.repositories.implementations;
 
 import org.example.model.Author;
 import org.example.model.Book;
+import org.example.model.data.repositories.abstractions.BookRepository;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.Optional;
 
-public class HibernateBookRepository implements BookRepository{
+public class HibernateBookRepository implements BookRepository {
 
     private Session session;
     private static final String SELECT_BY_NUM_PAGES = """
