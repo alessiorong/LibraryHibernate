@@ -28,8 +28,18 @@ public class Book {
     public Book() {
     }
 
+    public Book(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
     public Book(String title) {
         this.title = title;
+    }
+
+    public Book(String title, int numPages) {
+        this.title = title;
+        this.numPages = numPages;
     }
 
     public Book(String title, String genre) {
@@ -54,6 +64,10 @@ public class Book {
 
     public String getTitle() {
         return title;
+    }
+
+    public int getNumPages() {
+        return numPages;
     }
 
     public static void main(String[] args) {

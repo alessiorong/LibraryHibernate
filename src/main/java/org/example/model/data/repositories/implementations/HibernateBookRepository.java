@@ -91,7 +91,7 @@ public class HibernateBookRepository implements BookRepository {
     }
 
     @Override
-    public List<Book> findAllByAuthor(int id) {
+    public List<Book> findAllByAuthorId(int id) {
         return session.createQuery(SELECT_BY_AUTHOR_ID, Book.class)
                 .setParameter("id", id)
                 .getResultList();
