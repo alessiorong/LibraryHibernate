@@ -25,9 +25,14 @@ public class HibernateUserRepository implements UserRepository {
             (SELECT COUNT(b) FROM u.favouriteBooks as b)
             """;
     private static final String SELECT_USERS_AND_BOOKS_COUNT = """
-            SELECT u, COUNT(u.favouriteBooks) c FROM User u JOIN u.favouriteBooks b
+            SELECT u, COUNT(u.favouriteBooks) AS c FROM User u JOIN u.favouriteBooks 
             GROUP BY u 
             ORDER BY c DESC
+            """;
+    private static final String SELECT_USERS_AND_BOOKS_COUNT_CUSTOM = """
+            SELECT new org.example.model.data.repositories.implementations.UserAndFavoritesCount(u,COUNT(b))
+            FROM User u JOIN u.favouriteBooks b
+            GROUP BY u 
             """;
     private static final String SELECT_BY_GENRE_IN = """
             SELECT DISTINCT u FROM User u JOIN u.favouriteBooks b 
@@ -69,9 +74,10 @@ public class HibernateUserRepository implements UserRepository {
     }
 
     @Override
-    public List<Object[]> findAllWithBookCount() {
-        return session.createQuery(SELECT_USERS_AND_BOOKS_COUNT, Object[].class)
-                .getResultList();
+    public List<UserAndFavoritesCount> findAllWithBookCount() {
+       Query<UserAndFavoritesCount> query = session.createQuery(SELECT_USERS_AND_BOOKS_COUNT_CUSTOM, UserAndFavoritesCount.class);
+       List<UserAndFavoritesCount> results = query.getResultList();
+       return results;
     }
 
     @Override
@@ -111,4 +117,6 @@ public class HibernateUserRepository implements UserRepository {
     public void update(User u) {
         session.merge(u);
     }
+
+
 }

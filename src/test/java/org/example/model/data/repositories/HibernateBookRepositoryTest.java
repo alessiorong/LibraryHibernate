@@ -3,6 +3,7 @@ package org.example.model.data.repositories;
 import org.example.model.Author;
 import org.example.model.Book;
 import org.example.model.data.SessionFactoryHolder;
+import org.example.model.data.repositories.implementations.HibernateBookRepository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.jupiter.api.*;

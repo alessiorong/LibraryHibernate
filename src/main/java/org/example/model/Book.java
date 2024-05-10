@@ -20,7 +20,10 @@ public class Book {
     private Author author;
     @Column(name = "num_ pages")
     private int numPages;
-    @ManyToMany(mappedBy = "favouriteBooks")
+    // @ManyToMany(mappedBy = "favouriteBooks", cascade =
+    // {CascadeType.REMOVE,CascadeType.PERSIST})
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "book_user", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> fans = new ArrayList<>();
 
     public Book() {
@@ -37,7 +40,6 @@ public class Book {
     public void setAuthor(Author author) {
         this.author = author;
     }
-
 
     public int getId() {
         return id;
@@ -61,7 +63,7 @@ public class Book {
 
     @Override
     public int hashCode() {
-        return id.intValue();
+        return id;
     }
 
     @Override
@@ -86,6 +88,12 @@ public class Book {
         return numPages;
     }
 
-    
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
 
 }
