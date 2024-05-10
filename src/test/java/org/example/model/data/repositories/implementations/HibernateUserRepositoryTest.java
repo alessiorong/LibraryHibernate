@@ -25,6 +25,7 @@ class HibernateUserRepositoryTest {
 
     @BeforeEach
     void setUp() {
+
     }
 
     @AfterEach

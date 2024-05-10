@@ -16,7 +16,7 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
-    @Column(name = "num_ pages")
+    @Column(name = "num_pages")
     private int numPages;
     @Column(name = "genre")
     private String genre;
@@ -33,7 +33,16 @@ public class Book {
     public Book(String title) {
         this.title = title;
     }
+    public Book(String title, Author author, int numPages){
+        this(title);
+        this.author = author;
+        this.numPages = numPages;
+    }
+    public Book(int id, String title){
+        this(title);
+        this.id = id;
 
+    }
     public Author getAuthor() {
         return author;
     }
@@ -54,7 +63,9 @@ public class Book {
     public List<User> getFans() {
         return fans;
     }
-
+    public int getNumPages(){
+        return numPages;
+    }
     public static void main(String[] args) {
         Author a = new Author();
         Book b = new Book();
@@ -62,6 +73,9 @@ public class Book {
         //b.setAuthor(a);
         //Uso Hibernate per salvare il libro e l'autore
     }
-
+    @Override
+    public String toString(){
+        return id + title;
+    }
 }
 // a
