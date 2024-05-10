@@ -10,7 +10,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     @Column(name = "username")
     private String username;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -25,16 +25,16 @@ public class User {
         this.username = username;
     }
 
-    public User(Long id, String username) {
+    public User(int id, String username) {
         this.id = id;
         this.username = username;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

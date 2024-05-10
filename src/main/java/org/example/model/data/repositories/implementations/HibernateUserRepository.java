@@ -20,17 +20,15 @@ public class HibernateUserRepository implements UserRepository {
             """;
     private static final String SELECT_BY_ALL_FAVOURITES_SAME_GENRE = """
             SELECT u FROM User u
-            WHERE (SELECT COUNT(b) FROM u.favouriteBooks b WHERE b.genre = :genre) =
-            (SELECT COUNT(b) FROM u.favouriteBooks)
+            WHERE (SELECT COUNT(fb) FROM u.favouriteBooks fb WHERE fb.genre = :genre) =
+            (SELECT COUNT(fb) FROM u.favouriteBooks)
             """;
 private static final String SELECT_USER_AND_BOOK_COUNT = """
-            SELECT u, COUNT(b) FROM User u JOIN u.favouriteBooks fb GROUP BY u ORDER BY COUNT(b) DESC
+            SELECT u, COUNT(fb) FROM User u JOIN u.favouriteBooks fb GROUP BY u ORDER BY COUNT(b) DESC
             """;
     private static final String SELECT_AT_LEAST_ONE_FAVOURITE_BY_3GENRE = """
             SELECT DISTINCT u FROM User u JOIN u.favouriteBooks fb
-            WHERE fb.genre = :genre1
-            OR fb.genre = :genre2
-            OR fb.genre = :genre3
+            WHERE fb.genre IN (:genre1, :genre2, :genre3)
             """;
 
     public HibernateUserRepository(Session session){

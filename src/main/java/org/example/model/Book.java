@@ -10,7 +10,7 @@ import java.util.List;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     @Column(name = "title")
     private String title;
     @ManyToOne
@@ -37,6 +37,10 @@ public class Book {
         this.genre = genre;
     }
 
+    public Author getAuthor() {
+        return author;
+    }
+
     public void setAuthor(Author author) {
         this.author = author;
     }
@@ -44,7 +48,7 @@ public class Book {
         this.fans.add(user);
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
