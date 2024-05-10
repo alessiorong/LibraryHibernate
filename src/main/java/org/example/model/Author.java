@@ -25,11 +25,8 @@ public class Author {
 
     public Author(int id, String firstname, String lastname, LocalDate birthdate,
                   String country, List<Book> books) {
+        this(firstname, lastname, birthdate, country);
         this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.birthdate = birthdate;
-        this.country = country;
         this.books = books;
     }
 
@@ -51,5 +48,9 @@ public class Author {
 
     public int getId() {
         return id;
+    }
+
+    public List<Book> getBooks() {
+        return books;
     }
 }

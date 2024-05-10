@@ -45,6 +45,11 @@ public class Book {
         this.numPages = numPages;
     }
 
+    public Book(String title, Author author, int numPages, String genre) {
+        this(title, author, numPages);
+        this.genre = genre;
+    }
+
     public Author getAuthor() {
         return author;
     }
