@@ -150,7 +150,7 @@ class HibernateBookRepositoryTest {
     }
 
     @Test
-    void testFindAllByAuthorId() {
+    void findAllByAuthorId() {
         try(Session s = SessionFactoryHolder.getHolder().createSession()){
             hr = new HibernateBookRepository(s);
             List<Book> books = hr.findAllByAuthorId(a1.getId());
