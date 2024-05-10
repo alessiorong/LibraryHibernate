@@ -4,9 +4,8 @@ import org.example.model.Author;
 import org.example.model.Book;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface BookRepository extends Repository<Book> {
+public interface BookRepository extends CrudRepository<Book, Integer>{
     List<Book> findAllByNumPages(int numPages);
     List<Book> findAllByAuthor(Author author);
     List<Book> findAllByAuthor(int id);

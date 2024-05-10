@@ -7,10 +7,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "app_user")
-public class User {
+public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     @Column(name = "username")
     private String username;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -21,20 +21,16 @@ public class User {
 
     public User(){};
 
-    public User(String username) {
-        this.username = username;
-    }
-
-    public User(Long id, String username) {
+    public User(int id, String username) {
         this.id = id;
         this.username = username;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -54,8 +50,11 @@ public class User {
         this.favouriteBooks = favouriteBooks;
     }
 
-    public void addFavBook(Book b){
-        favouriteBooks.add(b);
-        b.setFan(this);
+    public void addFavouriteBook(Book b){
+        if (b != null){
+            favouriteBooks.add(b);
+            b.getFans().add(this);
+        }
     }
+
 }
