@@ -26,6 +26,10 @@ public class User  {
         this.username = username;
     }
 
+    public User(String username) {
+        this.username = username;
+    }
+
     public int getId() {
         return id;
     }

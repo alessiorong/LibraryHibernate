@@ -22,6 +22,7 @@ class HibernateBookRepositoryTest {
     private static final String TITLE = "title";
     private static final String TITLE2 = "title2";
     private static final String TITLE3 = "title3";
+    private static final String TITLE4 = "title4";
     private Book b1;
     private Book b2;
     private Book b3;
@@ -56,8 +57,11 @@ class HibernateBookRepositoryTest {
     @Test
     void save() {
         try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            Transaction tr = s.beginTransaction();
             a1.addBook(b3);
             hr.save(b3);
+            tr.commit();
         }
         try(Session s = SessionFactoryHolder.getHolder().createSession()){
             Book b = s.find(Book.class, b3.getId());
@@ -107,5 +111,18 @@ class HibernateBookRepositoryTest {
 
     @Test
     void update() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()) {
+            hr = new HibernateBookRepository(s);
+            Book b = s.find(Book.class, b1.getId());
+            assertNotNull(b);
+            assertEquals(TITLE, b.getTitle());
+            Transaction tr = s.beginTransaction();
+            Book updated = new Book(b.getId(), TITLE4);
+            hr.update(updated);
+            tr.commit();
+        }
+        try (Session s = SessionFactoryHolder.getHolder().createSession()){
+            assertEquals(TITLE4, s.find(Book.class, b1.getId()).getTitle());
+        }
     }
 }

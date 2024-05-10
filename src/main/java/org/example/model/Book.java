@@ -34,6 +34,11 @@ public class Book {
         this.title = title;
     }
 
+    public Book(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
     public Author getAuthor() {
         return author;
     }
