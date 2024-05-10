@@ -7,13 +7,15 @@ import java.util.List;
 
 @Entity
 @Table(name = "app_user")
-public class User {
+public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "username")
-    private String username;
-    @ManyToMany(fetch = FetchType.EAGER)
+    private int id;
+    @Column(name = "firstname")
+    private String firstname;
+    @Column(name = "lastname")
+    private String lastname;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinTable(name = "user_book",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "book_id"))
@@ -21,25 +23,30 @@ public class User {
 
     public User(){};
 
-    public User(Long id, String username) {
+    public User(int id, String firstname, String lastname) {
+        this(firstname, lastname);
         this.id = id;
-        this.username = username;
     }
 
-    public Long getId() {
+    public User(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public List<Book> getFavouriteBooks() {
@@ -49,4 +56,12 @@ public class User {
     public void setFavouriteBooks(List<Book> favouriteBooks) {
         this.favouriteBooks = favouriteBooks;
     }
+
+    public void addFavouriteBook(Book b){
+        if (b != null){
+            favouriteBooks.add(b);
+            b.getFans().add(this);
+        }
+    }
+
 }

@@ -10,16 +10,20 @@ import java.util.List;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     @Column(name = "title")
     private String title;
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
-    @Column(name = "num_pages")
+    @Column(name = "num_ pages")
     private int numPages;
+    @Column(name = "genre")
+    private String genre;
     @Transient //hibernate lo ignorerà
     private int dummy;
+
+
     @ManyToMany(mappedBy = "favouriteBooks")
     private List<User> fans = new ArrayList<>();
 
@@ -30,16 +34,49 @@ public class Book {
         this.title = title;
     }
 
+    public Book(int id, String title) {
+        this(title);
+        this.id = id;
+    }
+
+    public Book(String title, Author author, int numPages) {
+        this(title);
+        this.author = author;
+        this.numPages = numPages;
+    }
+
+    public Book(String title, Author author, int numPages, String genre) {
+        this(title, author, numPages);
+        this.genre = genre;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public int getNumPages() {
+        return numPages;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
     public void setAuthor(Author author) {
         this.author = author;
     }
 
-    public Long getId() {
+
+    public int getId() {
         return id;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public List<User> getFans() {
+        return fans;
     }
 
     public static void main(String[] args) {
