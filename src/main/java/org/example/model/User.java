@@ -15,7 +15,7 @@ public class User  {
     private String firstname;
     @Column(name = "lastname")
     private String lastname;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_book",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "book_id"))
@@ -47,6 +47,14 @@ public class User  {
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public List<Book> getFavouriteBooks() {

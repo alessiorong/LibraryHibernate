@@ -14,15 +14,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HibernateBookRepositoryTest {
 
-    private static final String FIRSTNAME = "Ciccio";
-    private static final String LASTNAME = "Pasticcio";
+    private static final String FIRSTNAME = "TEST_FIRSTNAME";
+    private static final String LASTNAME = "TEST_LASTNAME";
     private static final LocalDate BIRTHDATE = LocalDate.of(2000,1,1);
-    private static final String COUNTRY = "Italy";
-    private static final String TITLE = "title1";
-    private static final String TITLE2 = "title2";
-    private static final String TITLE3 = "title3";
-    private static final String TITLE4 = "title4";
-    private static final String TITLE_PART = "itl";
+    private static final String COUNTRY = "TEST_COUNTRY";
+    private static final String TITLE = "TITLE1";
+    private static final String TITLE2 = "TITLE2";
+    private static final String TITLE3 = "TITLE3";
+    private static final String TITLE4 = "TITLE4";
+    private static final String TITLE_PART = "ITL";
     private static final int TEST_NUM_PAGES = 100;
     private static final int TEST_NUM_PAGES2 = 200;
     private Book b1;
