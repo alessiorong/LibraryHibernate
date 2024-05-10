@@ -8,11 +8,11 @@ import org.hibernate.query.Query;
 import java.util.List;
 import java.util.Optional;
 
-public class HibernateBookRepository implements BookRepository{
+public class HibernateBookRepository implements BookRepository {
 
     private Session session;
     private static final String SELECT_BY_NUM_PAGES = """
-            SELECT b FROM Book b WHERE b.numPages = :numPages 
+            SELECT b FROM Book b WHERE b.numPages = :numPages
             """; // :numPages in hql
 
     private static final String SELECT_BY_AUTHOR = """
@@ -34,8 +34,8 @@ public class HibernateBookRepository implements BookRepository{
     private static final String SELECT_AUTHOR_AND_BOOK_COUNT_BY_AUTHOR_ID = """
             SELECT a, COUNT(b) FROM Author a JOIN a.books b WHERE a.id = :id
             """;
-    
-    public HibernateBookRepository(Session session){
+
+    public HibernateBookRepository(Session session) {
         this.session = session;
     }
 
@@ -54,8 +54,8 @@ public class HibernateBookRepository implements BookRepository{
 
     @Override
     public Optional<Book> findById(int id) {
-      Book b = session.find(Book.class, id);
-      return b != null ? Optional.of(b) : Optional.empty();
+        Book b = session.find(Book.class, id);
+        return b != null ? Optional.of(b) : Optional.empty();
     }
 
     @Override
@@ -72,14 +72,14 @@ public class HibernateBookRepository implements BookRepository{
 
     @Override
     public List<Book> findAllByNumPages(int numPages) {
-        //versione più formattata
+        // versione più formattata
         return session.createQuery(SELECT_BY_NUM_PAGES, Book.class)
                 .setParameter("numPages", numPages)
                 .getResultList();
-//        Query<Book> query = session.createQuery(SELECT_BY_NUM_PAGES, Book.class);
-//        query.setParameter("numPages", numPages);
-//        List<Book> results = query.getResultList();
-//        return results;
+        // Query<Book> query = session.createQuery(SELECT_BY_NUM_PAGES, Book.class);
+        // query.setParameter("numPages", numPages);
+        // List<Book> results = query.getResultList();
+        // return results;
     }
 
     @Override
@@ -106,9 +106,10 @@ public class HibernateBookRepository implements BookRepository{
 
     @Override
     public int getBookCountByAuthorId(int id) {
-        return session.createQuery(SELECT_COUNT_BY_AUTHOR_ID, Integer.class)
+        Long count = session.createQuery(SELECT_COUNT_BY_AUTHOR_ID, Long.class)
                 .setParameter("id", id)
                 .uniqueResult();
+        return count != null ? count.intValue() : 0;
     }
 
     @Override

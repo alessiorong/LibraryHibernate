@@ -14,12 +14,13 @@
 
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">validate</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!--update, create-drop, none, validate, create-->
 
         <mapping class="org.example.model.Book"/>
         <mapping class="org.example.model.Author"/>
         <mapping class="org.example.model.User"/>
+
     </session-factory>
 </hibernate-configuration>

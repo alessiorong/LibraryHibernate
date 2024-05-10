@@ -1,13 +1,13 @@
 package org.example.model.data.repositories;
 
-import org.hibernate.Session;
+//import org.hibernate.Session;
 
 import java.util.List;
 import java.util.Optional;
 
 public class HibernateRepository<T> implements Repository<T>{
 
-    private Session session;
+   // private Session session;
 
     @Override
     public T save(T t) {

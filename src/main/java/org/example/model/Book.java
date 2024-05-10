@@ -13,13 +13,13 @@ public class Book {
     private Long id;
     @Column(name = "title")
     private String title;
+    @Column(name = "genre")
+    private String genre;
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
     @Column(name = "num_pages")
     private int numPages;
-    @Transient //hibernate lo ignorerà
-    private int dummy;
     @ManyToMany(mappedBy = "favouriteBooks")
     private List<User> fans = new ArrayList<>();
 
@@ -46,8 +46,37 @@ public class Book {
         Author a = new Author();
         Book b = new Book();
         a.addBook(b);
-        //b.setAuthor(a);
-        //Uso Hibernate per salvare il libro e l'autore
+        // b.setAuthor(a);
+        // Uso Hibernate per salvare il libro e l'autore
     }
+
+    @Override
+    public int hashCode() {
+        return id.intValue();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Book other = (Book) obj;
+        if (other.id != id) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public void setNumPages(int numPages) {
+        this.numPages = numPages;
+    }
+
+    public int getNumPages() {
+        return numPages;
+    }
+
+    
 
 }
