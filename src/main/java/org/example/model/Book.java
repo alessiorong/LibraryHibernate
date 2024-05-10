@@ -35,12 +35,26 @@ public class Book {
     }
 
     public Book(int id, String title) {
+        this(title);
         this.id = id;
-        this.title = title;
+    }
+
+    public Book(String title, Author author, int numPages) {
+        this(title);
+        this.author = author;
+        this.numPages = numPages;
     }
 
     public Author getAuthor() {
         return author;
+    }
+
+    public int getNumPages() {
+        return numPages;
+    }
+
+    public String getGenre() {
+        return genre;
     }
 
     public void setAuthor(Author author) {

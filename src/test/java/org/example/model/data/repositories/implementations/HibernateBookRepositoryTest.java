@@ -23,6 +23,8 @@ class HibernateBookRepositoryTest {
     private static final String TITLE2 = "title2";
     private static final String TITLE3 = "title3";
     private static final String TITLE4 = "title4";
+    private static final String TITLE_PART = "le1";
+    private static final int TEST_NUM_PAGES = 100;
     private Book b1;
     private Book b2;
     private Book b3;
@@ -31,8 +33,8 @@ class HibernateBookRepositoryTest {
     @BeforeEach
     void setUp() {
         a1 = new Author(FIRSTNAME, LASTNAME, BIRTHDATE, COUNTRY);
-        b1 = new Book(TITLE);
-        b2 = new Book(TITLE2);
+        b1 = new Book(TITLE, a1, TEST_NUM_PAGES);
+        b2 = new Book(TITLE2, a1, TEST_NUM_PAGES);
         b3 = new Book(TITLE3);
         a1.addBook(b1);
         a1.addBook(b2);
@@ -124,5 +126,53 @@ class HibernateBookRepositoryTest {
         try (Session s = SessionFactoryHolder.getHolder().createSession()){
             assertEquals(TITLE4, s.find(Book.class, b1.getId()).getTitle());
         }
+    }
+
+    @Test
+    void findAllByNumPages() {
+        try (Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            List<Book> books = hr.findAllByNumPages(TEST_NUM_PAGES);
+            assertTrue(books.stream().anyMatch(b -> b.getId() == b1.getId() && b.getNumPages() == (b1.getNumPages())));
+            assertTrue(books.stream().anyMatch(b -> b.getId() == b2.getId() && b.getNumPages() == (b2.getNumPages())));
+        }
+    }
+
+    @Test
+    void findAllByAuthor() {
+        try (Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            List<Book> books = hr.findAllByAuthor(a1);
+            assertTrue(books.stream().anyMatch(b -> b.getId() == b1.getId() && b.getAuthor().getId() == (b1.getAuthor().getId())));
+            assertTrue(books.stream().anyMatch(b -> b.getId() == b2.getId() && b.getAuthor().getId() == (b2.getAuthor().getId())));
+        }
+    }
+
+    @Test
+    void testFindAllByAuthor() {
+        try (Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            List<Book> books = hr.findAllByAuthor(a1.getId());
+            assertTrue(books.stream().anyMatch(b -> b.getId() == b1.getId() && b.getAuthor().getId() == (b1.getAuthor().getId())));
+            assertTrue(books.stream().anyMatch(b -> b.getId() == b2.getId() && b.getAuthor().getId() == (b2.getAuthor().getId())));
+        }
+    }
+
+//    @Test
+//    void findAllByTitlePartAndNumPages() {
+//        try (Session s = SessionFactoryHolder.getHolder().createSession()){
+//            hr = new HibernateBookRepository(s);
+//            List<Book> books = hr.findAllByTitlePartAndNumPages(a1.getId(), );
+//            assertTrue(books.stream().anyMatch(b -> b.getId() == b1.getId() && b.getAuthor().getId() == (b1.getAuthor().getId())));
+//            assertTrue(books.stream().anyMatch(b -> b.getId() == b2.getId() && b.getAuthor().getId() == (b2.getAuthor().getId())));
+//        }
+//    }
+
+    @Test
+    void getBookCountByAuthorId() {
+    }
+
+    @Test
+    void getAuthorAndBookCountById() {
     }
 }

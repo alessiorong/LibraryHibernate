@@ -25,7 +25,6 @@ class HibernateUserRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        u1 = new User(firstname);
     }
 
     @AfterEach

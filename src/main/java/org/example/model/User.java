@@ -11,8 +11,10 @@ public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "username")
-    private String username;
+    @Column(name = "firstname")
+    private String firstname;
+    @Column(name = "lastname")
+    private String lastname;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_book",
     joinColumns = @JoinColumn(name = "user_id"),
@@ -21,13 +23,14 @@ public class User  {
 
     public User(){};
 
-    public User(int id, String username) {
+    public User(int id, String firstname, String lastname) {
+        this(firstname, lastname);
         this.id = id;
-        this.username = username;
     }
 
-    public User(String username) {
-        this.username = username;
+    public User(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 
     public int getId() {
@@ -38,12 +41,12 @@ public class User  {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public List<Book> getFavouriteBooks() {
