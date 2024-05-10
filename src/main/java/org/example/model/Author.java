@@ -20,7 +20,7 @@ public class Author {
     private LocalDate birthdate;
     @Column(name = "country")
     private String country;
-    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "author", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Book> books = new ArrayList<>();
 
     public Author(int id, String firstname, String lastname, LocalDate birthdate,
@@ -47,5 +47,9 @@ public class Author {
     public void addBook(Book b){
         books.add(b);
         b.setAuthor(this);
+    }
+
+    public int getId() {
+        return id;
     }
 }

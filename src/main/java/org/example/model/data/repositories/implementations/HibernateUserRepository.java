@@ -27,14 +27,14 @@ public class HibernateUserRepository implements UserRepository {
     private static final String SELECT_USERS_AND_BOOKS_COUNT = """
             SELECT u, COUNT(u.favouriteBooks) c FROM User u JOIN u.favouriteBooks b
             GROUP BY u 
-            ORDER BY DESC
+            ORDER BY c DESC
             """;
     private static final String SELECT_BY_GENRE_IN = """
             SELECT DISTINCT u FROM User u JOIN u.favouriteBooks b 
             WHERE b.genre IN (:genre1, :genre2, :genre3)
             """;
     private static final String SELECT_BY_GENRE_IN_V2 = """
-            SELECT DISTINCT u FROM User u
+            SELECT u FROM User u
             WHERE EXISTS (
                 SELECT 1
                 FROM u.favouriteBooks as b
@@ -69,9 +69,9 @@ public class HibernateUserRepository implements UserRepository {
     }
 
     @Override
-    public Object[] findAllWithBookCount() {
+    public List<Object[]> findAllWithBookCount() {
         return session.createQuery(SELECT_USERS_AND_BOOKS_COUNT, Object[].class)
-                .uniqueResult();
+                .getResultList();
     }
 
     @Override
