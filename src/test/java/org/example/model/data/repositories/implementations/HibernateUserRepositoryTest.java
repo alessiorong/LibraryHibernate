@@ -28,9 +28,7 @@ class HibernateUserRepositoryTest {
     private static final String title4 = "Intelligenza emotiva";
     private static final String genre = "fantasy";
     private static final String genre1 = "saggistica";
-//    private static final String part = "itl";
-//    private static final int numPages = 280;
-//    private static final int numPages2 = 500;
+    private static final String genre2 = "narrativa";
     private Book b1;
     private Book b2;
     private Book b3;
@@ -57,7 +55,7 @@ class HibernateUserRepositoryTest {
         a1.addBook(b4);
         u.addBook(b1);
         u.addBook(b2);
-        us.addBook(b3);
+        us.addBook(b2);
         us.addBook(b4);
         try(Session s = SessionFactoryHolder.getHolder().createSession()){
             Transaction tr = s.beginTransaction();
@@ -159,7 +157,7 @@ class HibernateUserRepositoryTest {
         try(Session s = SessionFactoryHolder.getHolder().createSession()){
             hur = new HibernateUserRepository(s);
             List<User> users = hur.findAllByAuthorId(a1.getId());
-            assertTrue(users.stream().anyMatch(u->u.getFavouriteBooks().stream().anyMatch(b->b.getAuthor().getId()==a1.getId())));
+            assertTrue(users.stream().allMatch(u->u.getFavouriteBooks().stream().anyMatch(b->b.getAuthor().getId()==a1.getId())));
         }
     }
 
@@ -168,16 +166,27 @@ class HibernateUserRepositoryTest {
         try(Session s = SessionFactoryHolder.getHolder().createSession()){
             hur = new HibernateUserRepository(s);
             List<User> users = hur.findAllWithAtLeastOneBookByGenre(genre);
-            assertTrue(users.stream().anyMatch(u->u.getFavouriteBooks().stream().anyMatch(b->b.getGenre()==genre)));
+            assertTrue(users.stream().allMatch(u->u.getFavouriteBooks().stream().anyMatch(b->b.getGenre().equals(genre))));
         }
     }
 
     @Test
     void findAllWithAllBooksByGenre() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hur = new HibernateUserRepository(s);
+            List<User> users = hur.findAllWithAllBooksByGenre(genre);
+            assertTrue(users.stream().allMatch(u->u.getFavouriteBooks().stream().allMatch(b->b.getGenre().equals(genre))));
+        }
     }
 
     @Test
     void testFindAllWithAtLeastOneBookByGenre() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hur = new HibernateUserRepository(s);
+            List<User> users = hur.findAllWithAtLeastOneBookByGenre(genre,genre1,genre2);
+            assertTrue(users.stream().allMatch(u->u.getFavouriteBooks().stream().anyMatch(b->b.getGenre().equals(genre)||b.getGenre().equals(genre1)||b.getGenre().equals(genre2))));
+        }
+
     }
 
     @Test
