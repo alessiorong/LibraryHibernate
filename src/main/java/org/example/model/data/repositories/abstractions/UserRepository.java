@@ -4,10 +4,11 @@ import org.example.model.User;
 
 import java.util.List;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
-    List<User> findAllByAuthor(int authorId);
-    List<User> findAllByAtLeastOneGenre(String genre);
-    List<User> findAllWithOneGenre(String genre);
-    List<Object[]> findAllWithBookCount();
-    List<User> findAllWithAtLeastOneGenre(String genre1, String genre2, String genre3);
+public interface UserRepository extends Repository<User>{
+        List<User> findAllByAuthorId(int id);
+        List<User> findAllWithAtLeastOneBookByGenre(String genre);
+        List<User> findAllWithAllBooksByGenre(String genre);
+        List<Object[]> getUsersWithBookCount();
+        List<User> findAllWithAtLeastOneBookByGenre(String genre,String genre1, String genre2);
+
 }

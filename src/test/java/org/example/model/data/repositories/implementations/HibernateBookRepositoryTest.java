@@ -2,7 +2,9 @@ package org.example.model.data.repositories.implementations;
 
 import org.example.model.Author;
 import org.example.model.Book;
+import org.example.model.User;
 import org.example.model.data.SessionFactoryHolder;
+import org.example.model.data.repositories.implementations.HibernateBookRepository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.jupiter.api.*;
@@ -10,33 +12,39 @@ import org.junit.jupiter.api.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class HibernateBookRepositoryTest {
 
-    private static final String FIRSTNAME = "Ciccio";
-    private static final String LASTNAME = "Pasticcio";
-    private static final LocalDate BIRTHDATE = LocalDate.of(2000,1,1);
-    private static final String COUNTRY = "Italy";
-    private static final String TITLE = "title";
-    private static final String TITLE2 = "title2";
-    private static final String TITLE3 = "title3";
+    private static final String firstname = "Ciccio";
+    private static final String lastname = "Pasticcio";
+    private static final LocalDate birthdate = LocalDate.of(2000,1,1);
+    private static final String country = "Italy";
+    private static final String title = "title";
+    private static final String title2 = "uno e nessuno";
+    private static final String title3 = "Lago delle ninfee";
+    private static final String title4 = "Intelligenza emotiva";
+    private static final String genre4 = "fantasy";
+    private static final String part = "itl";
+    private static final int numPages = 280;
+    private static final int numPages2 = 500;
     private Book b1;
     private Book b2;
     private Book b3;
+    private Book b4;
     private Author a1;
     private HibernateBookRepository hr;
     @BeforeEach
     void setUp() {
-        a1 = new Author(FIRSTNAME, LASTNAME, BIRTHDATE, COUNTRY);
-        b1 = new Book(TITLE);
-        b2 = new Book(TITLE2);
-        b3 = new Book(TITLE3);
+        a1 = new Author(firstname, lastname, birthdate, country);
+        b1 = new Book(title, numPages);
+        b2 = new Book(title2, numPages2);
+        b3 = new Book(title3, numPages);
         a1.addBook(b1);
         a1.addBook(b2);
         try(Session s = SessionFactoryHolder.getHolder().createSession()){
-            hr = new HibernateBookRepository(s);
             Transaction tr = s.beginTransaction();
             s.persist(a1);
             tr.commit();
@@ -56,13 +64,16 @@ class HibernateBookRepositoryTest {
     @Test
     void save() {
         try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            Transaction tr = s.beginTransaction();
             a1.addBook(b3);
             hr.save(b3);
+            tr.commit();
         }
         try(Session s = SessionFactoryHolder.getHolder().createSession()){
             Book b = s.find(Book.class, b3.getId());
             assertNotNull(b);
-            assertEquals(TITLE3, b.getTitle());
+            assertEquals(title3, b.getTitle());
             assertNotNull(b.getAuthor());
             assertEquals(a1.getId(), b.getAuthor().getId());
         }
@@ -73,39 +84,110 @@ class HibernateBookRepositoryTest {
         try(Session s = SessionFactoryHolder.getHolder().createSession()){
             hr = new HibernateBookRepository(s);
             List<Book> books = hr.findAll();
-            assertTrue(books.stream().anyMatch(b -> b.getId() == b1.getId() && b.getTitle().equals(b1.getTitle())));
-            assertTrue(books.stream().anyMatch(b -> b.getId() == b2.getId() && b.getTitle().equals(b2.getTitle())));
+            assertTrue(books.stream().anyMatch(b->b.getId()==b1.getId() && b.getTitle().equals(b1.getTitle())));
+            assertTrue(books.stream().anyMatch(b->b.getId()==b2.getId() && b.getTitle().equals(b2.getTitle())));
         }
     }
 
     @Test
     void findById() {
-        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+        try (Session s = SessionFactoryHolder.getHolder().createSession()) {
             hr = new HibernateBookRepository(s);
-//            Book b = s.find(Book.class, b1.getId());
-//            assertNotNull(b);
-//            assertEquals(TITLE, b1.getTitle());
-//            Optional<Book> ob = hr.findById(b1.getId());
-//            assertEquals(b.getId(), ob.get().getId());
             assertTrue(hr.findById(b1.getId()).isPresent());
         }
     }
 
     @Test
     void delete() {
-        try(Session s = SessionFactoryHolder.getHolder().createSession()){
-            hr = new HibernateBookRepository(s);
-            assertNotNull(s.find(Book.class,b1.getId()));
-            Transaction tr = s.beginTransaction();
-            hr.delete(b1.getId());
-            tr.commit();
-        }
-        try(Session s = SessionFactoryHolder.getHolder().createSession()){
-            assertNull(s.find(Book.class,b1.getId()));
-        }
+            try(Session s = SessionFactoryHolder.getHolder().createSession()){
+                hr = new HibernateBookRepository(s);
+                assertNotNull(s.find(Book.class, b1.getId()));
+                Transaction tr = s.beginTransaction();
+                hr.delete(b1.getId());
+                tr.commit();
+            }
+            try(Session s = SessionFactoryHolder.getHolder().createSession()) {
+                assertNull(s.find(Book.class, b1.getId()));
+            }
     }
 
     @Test
     void update() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            Book bb =s.find(Book.class, b1.getId());
+            assertNotNull(bb);
+            assertEquals(title, bb.getTitle());
+            Transaction tr = s.beginTransaction();
+            Book b4 = new Book(bb.getId(), title4);
+            hr.update(b4);
+            tr.commit();
+        }
+        try(Session s = SessionFactoryHolder.getHolder().createSession()) {
+            assertEquals(title4, s.find(Book.class, b1.getId()).getTitle());
+        }
+    }
+
+    @Test
+    void findAllByNumPages() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            List<Book> books = hr.findAllByNumPages(numPages);
+            for (Book b : books){
+                assertEquals(b.getNumPages(), numPages);
+            }
+        }
+    }
+
+    @Test
+    void findAllByAuthor() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            List<Book> books = hr.findAllByAuthor(a1);
+            for (Book b : books){
+                assertEquals(b.getAuthor().getId(), a1.getId());
+            }
+        }
+    }
+
+    @Test
+    void findAllByAuthorId() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            List<Book> books = hr.findAllByAuthorId(a1.getId());
+            for (Book b : books){
+                assertEquals(b.getAuthor().getId(), a1.getId());
+            }
+        }
+    }
+
+    @Test
+    void findAllByTitlePartAndNumPages() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            List<Book> books = hr.findAllByTitlePartAndNumPages(numPages,part);
+            assertTrue(books.stream().allMatch(b->b.getNumPages()==numPages && b.getTitle().contains(part)));
+        }
+    }
+
+    @Test
+    void getBookCountByAuthorId() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            int total = hr.getBookCountByAuthorId(a1.getId());
+            int authorBooks = a1.getBooks().size();
+            assertEquals(total, authorBooks);
+        }
+    }
+
+    @Test
+    void getAuthorAndBookCountById() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            Object[] authorAndCount = hr.getAuthorAndBookCountById(a1.getId());
+            Author aTest = (Author) authorAndCount[0];
+            long countTest = (Long) authorAndCount[1];
+            assertTrue(aTest.getId()==(a1.getId()) && countTest==a1.getBooks().size());
+        }
     }
 }

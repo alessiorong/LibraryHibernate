@@ -27,10 +27,10 @@ public class HibernateBookRepository implements BookRepository {
             SELECT b FROM Book b WHERE b.numPages >= :numPages AND b.title LIKE :part
             """;
     private static final String SELECT_COUNT_BY_AUTHOR_ID = """
-            SELECT COUNT(b) FROM Author a JOIN a.books b WHERE a.id = :id
+            SELECT COUNT(b) FROM Author a JOIN a.books b WHERE a.id = :id GROUP BY a
             """;
     private static final String SELECT_AUTHOR_AND_BOOK_COUNT_BY_AUTHOR_ID = """
-            SELECT a, COUNT(b) FROM Author a JOIN a.books b WHERE a.id = :id
+            SELECT a, COUNT(b) FROM Author a JOIN a.books b WHERE a.id = :id GROUP BY a
             """;
 
 
@@ -88,7 +88,7 @@ public class HibernateBookRepository implements BookRepository {
     }
 
     @Override
-    public List<Book> findAllByAuthor(int id) {
+    public List<Book> findAllByAuthorId(int id) {
         return session.createQuery(SELECT_BY_AUTHOR_ID, Book.class)
                 .setParameter("id", id)
                 .getResultList();
@@ -104,9 +104,10 @@ public class HibernateBookRepository implements BookRepository {
 
     @Override
     public int getBookCountByAuthorId(int id) {
-        return session.createQuery(SELECT_COUNT_BY_AUTHOR_ID, Integer.class)
+        Long l = session.createQuery(SELECT_COUNT_BY_AUTHOR_ID, Long.class)
                 .setParameter("id", id)
                 .uniqueResult();
+        return l !=null? l.intValue() : 0;
     }
 
     @Override
