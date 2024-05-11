@@ -62,6 +62,10 @@ public class Book {
         return id;
     }
 
+    public String getGenre() {
+        return genre;
+    }
+
     public String getTitle() {
         return title;
     }
