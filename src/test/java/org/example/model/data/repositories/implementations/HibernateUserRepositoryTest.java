@@ -36,7 +36,7 @@ class HibernateUserRepositoryTest {
     private User u1;
     private Author a1;
     private HibernateUserRepository hur;
-
+//CIAU
     @BeforeEach
     void setUp() {
 //        a1 = new Author(firstname, lastname, birthdate, country);
