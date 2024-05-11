@@ -17,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HibernateUserRepositoryTest {
     private static final String firstname = "Ciccio";
+    private static final String firstname2 = "Pino";
+    private static final String firstname4 = "Gino";
     private static final String lastname = "Pasticcio";
     private static final LocalDate birthdate = LocalDate.of(2000,1,1);
     private static final String country = "Italy";
@@ -24,32 +26,44 @@ class HibernateUserRepositoryTest {
     private static final String title2 = "uno e nessuno";
     private static final String title3 = "Lago delle ninfee";
     private static final String title4 = "Intelligenza emotiva";
-    private static final String genre4 = "fantasy";
+    private static final String genre = "fantasy";
+    private static final String genre1 = "saggistica";
+    private static final String genre2 = "narrativa";
     private static final String part = "itl";
-    private static final int numPages = 280;
-    private static final int numPages2 = 500;
+//    private static final int numPages = 280;
+//    private static final int numPages2 = 500;
     private Book b1;
     private Book b2;
     private Book b3;
     private Book b4;
     private User u;
     private User u1;
+    private User us;
     private Author a1;
     private HibernateUserRepository hur;
-//CIAU
+
     @BeforeEach
     void setUp() {
-//        a1 = new Author(firstname, lastname, birthdate, country);
-//        b1 = new Book(title, numPages);
-//        b2 = new Book(title2, numPages2);
-//        b3 = new Book(title3, numPages);
+        a1 = new Author(firstname, lastname, birthdate, country);
+        b1 = new Book(title, genre);
+        b2 = new Book(title2, genre);
+        b3 = new Book(title3, genre1);
+        b4 = new Book(title4, genre1);
         u = new User(firstname);
+        us = new User(firstname2);
+        a1.addBook(b1);
+        a1.addBook(b2);
+        a1.addBook(b3);
+        a1.addBook(b4);
+        u.addBook(b1);
+        u.addBook(b2);
+        us.addBook(b2);
+        us.addBook(b4);
 
-//        a1.addBook(b1);
-//        a1.addBook(b2);
         try(Session s = SessionFactoryHolder.getHolder().createSession()){
             Transaction tr = s.beginTransaction();
-            //s.persist(a1);
+            s.persist(a1);
+            s.persist(us);
             s.persist(u);
             tr.commit();
         }
@@ -59,12 +73,17 @@ class HibernateUserRepositoryTest {
     void tearDown() {
         try(Session s = SessionFactoryHolder.getHolder().createSession()){
             Transaction tr = s.beginTransaction();
-            //Author a = s.getReference(Author.class, a1.getId());
-            User uu = s.getReference(User.class, u.getId());
-            //s.remove(a);
+            Author a = s.getReference(Author.class, a1.getId());
+            User user = s.getReference(User.class, us.getId());
+            s.remove(user);
+            s.remove(a);
             if(u1!=null){
                 s.remove(s.getReference(User.class, u1.getId()));
             }
+            if(s.find(User.class, u.getId())!=null){
+                s.remove(s.find(User.class, u.getId()));
+            }
+
             tr.commit();
         }
     }
@@ -121,18 +140,46 @@ class HibernateUserRepositoryTest {
 
     @Test
     void update() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hur = new HibernateUserRepository(s);
+            User uu =s.find(User.class, u.getId());
+            assertNotNull(uu);
+            assertEquals(firstname, uu.getUsername());
+            Transaction tr = s.beginTransaction();
+            User u4 = new User(uu.getId(), firstname4);
+            hur.update(u4);
+            tr.commit();
+        }
+        try(Session s = SessionFactoryHolder.getHolder().createSession()) {
+            assertEquals(firstname4, s.find(User.class, u.getId()).getUsername());
+        }
     }
 
     @Test
     void findAllByAuthorId() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hur = new HibernateUserRepository(s);
+            List<User> users = hur.findAllByAuthorId(a1.getId());
+            assertTrue(users.stream().anyMatch(u->u.getFavouriteBooks().stream().anyMatch(b->b.getAuthor().getId()==a1.getId())));
+        }
     }
 
     @Test
     void findAllWithAtLeastOneBookByGenre() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hur = new HibernateUserRepository(s);
+            List<User> users = hur.findAllWithAtLeastOneBookByGenre(genre);
+            assertTrue(users.stream().allMatch(u->u.getFavouriteBooks().stream().anyMatch(b->b.getGenre().equals(genre))));
+        }
     }
 
     @Test
     void findAllWithAllBooksByGenre() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hur = new HibernateUserRepository(s);
+            List<User> users = hur.findAllWithAllBooksByGenre(genre);
+            assertTrue(users.stream().allMatch(u->u.getFavouriteBooks().stream().allMatch(b->b.getGenre().equals(genre))));
+        }
     }
 
     @Test
@@ -141,5 +188,10 @@ class HibernateUserRepositoryTest {
 
     @Test
     void testFindAllWithAtLeastOneBookByGenre() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hur = new HibernateUserRepository(s);
+            List<User> users = hur.findAllWithAtLeastOneBookByGenre(genre, genre1, genre2);
+            assertTrue(users.stream().allMatch(u->u.getFavouriteBooks().stream().anyMatch(b->b.getGenre().equals(genre)||b.getGenre().equals(genre1)||b.getGenre().equals(genre2))));
+        }
     }
 }

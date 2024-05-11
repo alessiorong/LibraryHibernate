@@ -78,4 +78,7 @@ public class Book {
         //Uso Hibernate per salvare il libro e l'autore
     }
 
+    public String getGenre() {
+        return genre;
+    }
 }

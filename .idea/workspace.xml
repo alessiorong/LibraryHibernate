@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b817b742-0141-446c-b3af-3f45e743b68c" name="Changes" comment="aggiunge Commento">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/data/repositories/implementations/HibernateUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/data/repositories/implementations/HibernateUserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/model/data/repositories/implementations/HibernateUserRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/model/data/repositories/implementations/HibernateUserRepositoryTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="francesca_piccitto" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "1stany"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/alessiorong/LibraryHibernate.git",
+    "accountId": "cdf643f2-2653-4c95-b60d-22e7aa33ec97"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="2gK3oIjtq6sOQgFKIBO7Md8Pk3r" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.HibernateUserRepositoryTest.delete.executor": "Run",
+    "JUnit.HibernateUserRepositoryTest.executor": "Run",
+    "JUnit.HibernateUserRepositoryTest.findAllByAuthorId.executor": "Run",
+    "JUnit.HibernateUserRepositoryTest.findAllWithAllBooksByGenre.executor": "Run",
+    "JUnit.HibernateUserRepositoryTest.findAllWithAtLeastOneBookByGenre.executor": "Run",
+    "JUnit.HibernateUserRepositoryTest.testFindAllWithAtLeastOneBookByGenre.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "stany",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="JUnit.HibernateUserRepositoryTest">
+    <configuration name="HibernateUserRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="LibraryHibernate" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.model.data.repositories.implementations.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.model.data.repositories.implementations" />
+      <option name="MAIN_CLASS_NAME" value="org.example.model.data.repositories.implementations.HibernateUserRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HibernateUserRepositoryTest.findAllByAuthorId" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="LibraryHibernate" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.model.data.repositories.implementations.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.model.data.repositories.implementations" />
+      <option name="MAIN_CLASS_NAME" value="org.example.model.data.repositories.implementations.HibernateUserRepositoryTest" />
+      <option name="METHOD_NAME" value="findAllByAuthorId" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HibernateUserRepositoryTest.findAllWithAllBooksByGenre" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="LibraryHibernate" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.model.data.repositories.implementations.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.model.data.repositories.implementations" />
+      <option name="MAIN_CLASS_NAME" value="org.example.model.data.repositories.implementations.HibernateUserRepositoryTest" />
+      <option name="METHOD_NAME" value="findAllWithAllBooksByGenre" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HibernateUserRepositoryTest.findAllWithAtLeastOneBookByGenre" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="LibraryHibernate" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.model.data.repositories.implementations.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.model.data.repositories.implementations" />
+      <option name="MAIN_CLASS_NAME" value="org.example.model.data.repositories.implementations.HibernateUserRepositoryTest" />
+      <option name="METHOD_NAME" value="findAllWithAtLeastOneBookByGenre" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HibernateUserRepositoryTest.testFindAllWithAtLeastOneBookByGenre" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="LibraryHibernate" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.model.data.repositories.implementations.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.model.data.repositories.implementations" />
+      <option name="MAIN_CLASS_NAME" value="org.example.model.data.repositories.implementations.HibernateUserRepositoryTest" />
+      <option name="METHOD_NAME" value="testFindAllWithAtLeastOneBookByGenre" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.HibernateUserRepositoryTest" />
+        <item itemvalue="JUnit.HibernateUserRepositoryTest.testFindAllWithAtLeastOneBookByGenre" />
+        <item itemvalue="JUnit.HibernateUserRepositoryTest.findAllWithAllBooksByGenre" />
+        <item itemvalue="JUnit.HibernateUserRepositoryTest.findAllWithAtLeastOneBookByGenre" />
+        <item itemvalue="JUnit.HibernateUserRepositoryTest.findAllByAuthorId" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b817b742-0141-446c-b3af-3f45e743b68c" name="Changes" comment="" />
+      <created>1715432617791</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1715432617791</updated>
+    </task>
+    <task id="LOCAL-00001" summary="aggiunge Commento">
+      <option name="closed" value="true" />
+      <created>1715432755252</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1715432755252</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="aggiunge Commento" />
+    <option name="LAST_COMMIT_MESSAGE" value="aggiunge Commento" />
+  </component>
+</project>
