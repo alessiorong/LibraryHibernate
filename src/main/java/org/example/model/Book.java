@@ -34,6 +34,22 @@ public class Book {
         this.title = title;
     }
 
+    public Book(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
+    public Book(String title, int numPages, String genre) {
+        this.title = title;
+        this.numPages = numPages;
+        this.genre = genre;
+    }
+
+    public Book(String title, int numPages) {
+        this.title = title;
+        this.numPages = numPages;
+    }
+
     public Author getAuthor() {
         return author;
     }
@@ -45,6 +61,10 @@ public class Book {
 
     public int getId() {
         return id;
+    }
+
+    public int getNumPages() {
+        return numPages;
     }
 
     public String getTitle() {
