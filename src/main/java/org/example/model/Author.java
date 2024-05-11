@@ -52,4 +52,8 @@ public class Author {
     public int getId() {
         return id;
     }
+
+    public List<Book> getBooks() {
+        return books;
+    }
 }

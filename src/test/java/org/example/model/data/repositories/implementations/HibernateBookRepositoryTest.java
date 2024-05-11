@@ -12,6 +12,7 @@ import org.junit.jupiter.api.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,6 +27,7 @@ class HibernateBookRepositoryTest {
     private static final String title3 = "Lago delle ninfee";
     private static final String title4 = "Intelligenza emotiva";
     private static final String genre4 = "fantasy";
+    private static final String part = "itl";
     private static final int numPages = 280;
     private static final int numPages2 = 500;
     private Book b1;
@@ -65,7 +67,6 @@ class HibernateBookRepositoryTest {
             hr = new HibernateBookRepository(s);
             Transaction tr = s.beginTransaction();
             a1.addBook(b3);
-            s.persist(a1);
             hr.save(b3);
             tr.commit();
         }
@@ -162,13 +163,31 @@ class HibernateBookRepositoryTest {
 
     @Test
     void findAllByTitlePartAndNumPages() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            List<Book> books = hr.findAllByTitlePartAndNumPages(numPages,part);
+            assertTrue(books.stream().allMatch(b->b.getNumPages()==numPages && b.getTitle().contains(part)));
+        }
     }
 
     @Test
     void getBookCountByAuthorId() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            int total = hr.getBookCountByAuthorId(a1.getId());
+            int authorBooks = a1.getBooks().size();
+            assertEquals(total, authorBooks);
+        }
     }
 
     @Test
     void getAuthorAndBookCountById() {
+        try(Session s = SessionFactoryHolder.getHolder().createSession()){
+            hr = new HibernateBookRepository(s);
+            Object[] authorAndCount = hr.getAuthorAndBookCountById(a1.getId());
+            Author aTest = (Author) authorAndCount[0];
+            long countTest = (Long) authorAndCount[1];
+            assertTrue(aTest.getId()==(a1.getId()) && countTest==a1.getBooks().size());
+        }
     }
 }
